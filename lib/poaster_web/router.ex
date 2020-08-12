@@ -13,6 +13,10 @@ defmodule PoasterWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :authenticated do
+    plug Poaster.Plugs.Authenticate
+  end
+
   scope "/", PoasterWeb do
     pipe_through :browser
 
@@ -23,10 +27,13 @@ defmodule PoasterWeb.Router do
   scope "/api", PoasterWeb do
     pipe_through :api
 
-    scope "/sessions" do
-      post "/sign_in", SessionsController, :create
-      delete "/sign_out", SessionsController, :delete
-    end
+    # Unauthenticated endpoints
+    post "/sessions/sign_in", SessionsController, :create
+
+    # Authenticated endpoints
+    pipe_through :authenticated
+    delete "/sessions/sign_out", SessionsController, :delete
+    # more routes
   end
 
   # Enables LiveDashboard only for development
