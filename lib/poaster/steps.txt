@@ -1,0 +1,8 @@
+# create users
+mix phx.gen.schema User users email:string:unique phone:string password_hash:string
+
+# Insert users into DB
+Poaster.Repo.insert!(Poaster.User.changeset(%Poaster.User{}, %{email: "alan.d.long@protonmail.com", password: "poaster!2020", phone: "3142017135"}))
+
+# create auth tokens
+mix phx.gen.schema AuthToken auth_tokens user_id:references:users token:text:unique revoked:boolean revoked_at:utc_datetime
