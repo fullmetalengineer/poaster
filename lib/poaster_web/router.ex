@@ -20,9 +20,14 @@ defmodule PoasterWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", PoasterWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", PoasterWeb do
+    pipe_through :api
+
+    scope "/sessions" do
+      post "/sign_in", SessionsController, :create
+      delete "/sign_out", SessionsController, :delete
+    end
+  end
 
   # Enables LiveDashboard only for development
   #

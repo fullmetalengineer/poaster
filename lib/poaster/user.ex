@@ -1,6 +1,10 @@
 defmodule Poaster.User do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Poaster.Services.Authenticator
+  alias Poaster.Repo
+  alias Poaster.User
+  alias Poaster.AuthToken
 
   schema "users" do
     has_many :auth_tokens, Poaster.AuthToken
@@ -27,6 +31,27 @@ defmodule Poaster.User do
         put_change(changeset, :password_hash, Comeonin.Bcrypt.hashpwsalt(pass))
       _ ->
         changeset
+    end
+  end
+
+  def sign_in(email, password) do
+    case Comeonin.Bcrypt.check_pass(Repo.get_by(User, email: email), password) do
+      {:ok, user} ->
+        token = Authenticator.generate_token(user.id)
+        Repo.insert(Ecto.build_assoc(user, :auth_tokens, %{token: token}))
+      err -> err
+    end
+  end
+
+  def sign_out(conn) do
+    case Authenticator.get_auth_token(conn) do
+      {:ok, token} ->
+        IO.inspect(token)
+        case Repo.get_by(AuthToken, %{token: token}) do
+          nil -> {:error, :not_found}
+          auth_token -> Repo.delete(auth_token)
+        end
+      error -> error
     end
   end
 end
