@@ -32,7 +32,10 @@ defmodule PoasterWeb.Router do
 
     # Authenticated endpoints
     pipe_through :authenticated
-    delete "/sessions/sign_out", SessionsController, :delete
+    scope "/sessions" do
+      delete "/sign_out", SessionsController, :delete
+      post "/revoke", SessionsController, :revoke
+    end
     # more routes
   end
 
