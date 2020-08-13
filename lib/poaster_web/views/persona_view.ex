@@ -2,7 +2,6 @@ defmodule PoasterWeb.PersonaView do
   use PoasterWeb, :view
 
   def render("persona.json", %{persona: persona}) do
-    IO.puts("persona.json")
     %{
       id: persona.id,
       background_image_url: persona.background_image_url,
