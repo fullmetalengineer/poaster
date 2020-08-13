@@ -9,7 +9,7 @@ defmodule Poaster.Services.Authenticator do
   end
   def verify_token(token) do
     case Phoenix.Token.verify(@secret, @seed, token) do
-      {:ok, id} -> {:ok, token}
+      {:ok, _id} -> {:ok, token}
       error -> error
     end
   end

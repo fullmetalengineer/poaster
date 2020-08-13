@@ -5,9 +5,11 @@ defmodule Poaster.User do
   alias Poaster.Repo
   alias Poaster.User
   alias Poaster.AuthToken
+  alias Poaster.Persona
 
   schema "users" do
     has_many :auth_tokens, Poaster.AuthToken
+    has_many :personas, Poaster.Persona
     field :email, :string
     field :password_hash, :string
     field :password, :string, virtual: true

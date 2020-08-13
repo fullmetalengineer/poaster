@@ -1,0 +1,21 @@
+User
+    has_many personas
+    has_many auth_tokens
+    - email
+    - phone
+    - password
+
+
+
+    - persona1
+        has_many posts
+        has_many likes
+        has_many repoasts
+        - rolling_day_post_count
+        - rolling_day_reply_count
+    - persona2
+        has_many posts
+        has_many likes
+        has_many repoasts
+        - rolling_day_post_count
+        - rolling_day_reply_count
