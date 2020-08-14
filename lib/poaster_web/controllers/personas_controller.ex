@@ -53,6 +53,19 @@ defmodule PoasterWeb.PersonasController do
         })
     end
 
+    # Guard against empty usernames
+    if String.length(username) < 1 do
+      conn
+        |> put_status(400)
+        |> json(%{
+            success: false,
+            error: %{
+              detail: "You must provide a valid username when creating a Persona!"
+            }
+          })
+        |> halt()
+    end
+
     result = Accounts.create_persona(%{username: username, user_id: user.id})
     case result do
       {:ok, persona} ->
