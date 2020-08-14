@@ -11,4 +11,4 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
-View the (mostly) RESTful [`API Documentation`](https://github.com/fullmetalengineer/poaster/wiki/API-Documentation).
+View the (mostly) RESTful Poaster [`API Documentation`](https://github.com/fullmetalengineer/poaster/wiki/API-Documentation).
