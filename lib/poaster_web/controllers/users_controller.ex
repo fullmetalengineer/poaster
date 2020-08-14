@@ -1,7 +1,7 @@
 defmodule PoasterWeb.UsersController do
   use PoasterWeb, :controller
   alias Poaster.Repo
-  alias Poaster.User
+  alias Poaster.Accounts.User
 
   def me(conn, _params) do
     user = Repo.get(User, conn.assigns[:signed_user].id) |> Repo.preload([:personas])
