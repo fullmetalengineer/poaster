@@ -42,6 +42,9 @@ defmodule PoasterWeb.Router do
     end
 
     resources "/personas", PersonasController, except: [:new, :edit]
+    scope "/personas" do
+      post "/availability", PersonasController, :availability
+    end
   end
 
   # Enables LiveDashboard only for development

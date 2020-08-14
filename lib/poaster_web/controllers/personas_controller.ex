@@ -4,6 +4,28 @@ defmodule PoasterWeb.PersonasController do
   alias Poaster.Accounts.Persona
   alias Poaster.Repo
 
+  def availability(conn, %{"username" => username}) do
+    # Guard against empty usernames
+    if String.length(username) < 1 do
+      conn |> put_status(400) |> json(%{ available: false})
+    end
+
+    # TODO: Require usernames to be a certain length?
+
+    persona = Repo.get_by(Persona, username: username)
+
+    case persona do
+      %Persona{} ->
+        conn
+          |> put_status(400)
+          |> json(%{ available: false})
+      nil ->
+        conn
+        |> put_status(200)
+        |> json(%{ available: true })
+    end
+  end
+
   def show(conn, %{"id" => id}) do
     persona = Accounts.get_persona!(id)
     case persona do
@@ -25,10 +47,10 @@ defmodule PoasterWeb.PersonasController do
     # Handle having a limit on persona creation
     if current_persona_count >= 3 do
       conn
-          |> put_status(400)
-          |> json(%{ success: false, error:
-            %{ detail: "You have reached your persona limit. Please purchase additional personas if you wish to create more!"}
-            })
+      |> put_status(400)
+      |> json(%{ success: false, error:
+        %{ detail: "You have reached your persona limit. Please purchase additional personas if you wish to create more!"}
+        })
     end
 
     result = Accounts.create_persona(%{username: username, user_id: user.id})
