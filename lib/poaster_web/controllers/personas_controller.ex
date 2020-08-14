@@ -2,6 +2,7 @@ defmodule PoasterWeb.PersonasController do
   use PoasterWeb, :controller
   alias Poaster.Accounts
   alias Poaster.Accounts.Persona
+  alias Poaster.Repo
 
   def show(conn, %{"id" => id}) do
     persona = Accounts.get_persona!(id)
@@ -19,8 +20,18 @@ defmodule PoasterWeb.PersonasController do
 
   def create(conn, %{"username" => username}) do
     user = conn.assigns[:signed_user]
+    current_persona_count = user |> Ecto.assoc(:personas) |> Repo.aggregate(:count, :id)
+
+    # Handle having a limit on persona creation
+    if current_persona_count >= 3 do
+      conn
+          |> put_status(400)
+          |> json(%{ success: false, error:
+            %{ detail: "You have reached your persona limit. Please purchase additional personas if you wish to create more!"}
+            })
+    end
+
     result = Accounts.create_persona(%{username: username, user_id: user.id})
-    IO.inspect(result)
     case result do
       {:ok, persona} ->
         conn
