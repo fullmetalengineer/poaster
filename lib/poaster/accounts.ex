@@ -91,6 +91,42 @@ defmodule Poaster.Accounts do
   end
 
   @doc """
+  Determines if a user owns a particular personas.
+
+  ## Examples
+
+      iex> user_owns_persona?(user, persona)
+      true
+
+      iex> user_owns_persona?(user, persona)
+      false
+
+  """
+  def user_owns_persona?(user, persona) do
+    user_with_personas = user |> Repo.preload(:personas)
+
+    # # Filter down using a comprehension to get a match
+    # a = []
+    # for p <- user_with_personas.personas, p.id == persona.id, into: a, do: p
+
+    # Determine if the persona passed in is in the returned list
+    persona in user_with_personas.personas
+  end
+
+  @doc """
+  Returns the number of personas a user has on their account
+
+  ## Examples
+
+      iex> persona_count(user)
+      3
+
+  """
+  def persona_count(user) do
+    user |> Ecto.assoc(:personas) |> Repo.aggregate(:count, :id)
+  end
+
+  @doc """
   Returns an `%Ecto.Changeset{}` for tracking user changes.
 
   ## Examples
