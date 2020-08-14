@@ -1,4 +1,4 @@
-defmodule PoasterWeb.UserView do
+defmodule PoasterWeb.UsersView do
   use PoasterWeb, :view
 
   def render(conn, "me.json", %{user: user}) do

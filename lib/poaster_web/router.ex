@@ -38,8 +38,10 @@ defmodule PoasterWeb.Router do
     end
     # more routes
     scope "/users" do
-      get "/me", UserController, :me
+      get "/me", UsersController, :me
     end
+
+    resources "/personas", PersonasController, except: [:new, :edit]
   end
 
   # Enables LiveDashboard only for development

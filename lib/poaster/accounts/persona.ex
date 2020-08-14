@@ -1,4 +1,4 @@
-defmodule Poaster.Persona do
+defmodule Poaster.Accounts.Persona do
   use Ecto.Schema
   import Ecto.Changeset
   alias Poaster.User
@@ -17,8 +17,10 @@ defmodule Poaster.Persona do
   @doc false
   def changeset(persona, attrs) do
     persona
-    |> cast(attrs, [:username, :name, :bio, :profile_image_url, :background_image_url])
+    |> cast(attrs, [:username, :name, :bio, :profile_image_url, :background_image_url, :user_id])
     |> validate_required([:username])
-    |> unique_constraint(:username)
+    |> unique_constraint(:username, name: :personas_username_index)
   end
+
+
 end
