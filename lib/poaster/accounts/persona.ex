@@ -1,7 +1,7 @@
 defmodule Poaster.Accounts.Persona do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Poaster.User
+  alias Poaster.Accounts.User
 
   schema "personas" do
     belongs_to :user, User
