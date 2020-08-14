@@ -4,7 +4,7 @@ defmodule Poaster.Accounts.User do
   alias Poaster.Services.Authenticator
   alias Poaster.Repo
   alias Poaster.Accounts.User
-  alias Poaster.Acounts.AuthToken
+  alias Poaster.Accounts.AuthToken
   alias Poaster.Accounts.Persona
 
   schema "users" do
