@@ -1,7 +1,7 @@
-defmodule Poaster.AuthToken do
+defmodule Poaster.Accounts.AuthToken do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Poaster.User
+  alias Poaster.Accounts.User
 
   schema "auth_tokens" do
     belongs_to :user, User

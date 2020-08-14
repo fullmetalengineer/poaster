@@ -37,6 +37,14 @@ defmodule PoasterWeb.Router do
       post "/revoke", SessionsController, :revoke
     end
     # more routes
+    scope "/users" do
+      get "/me", UsersController, :me
+    end
+
+    resources "/personas", PersonasController, except: [:new, :edit]
+    scope "/personas" do
+      post "/availability", PersonasController, :availability
+    end
   end
 
   # Enables LiveDashboard only for development

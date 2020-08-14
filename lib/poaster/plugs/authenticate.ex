@@ -1,11 +1,13 @@
 defmodule Poaster.Plugs.Authenticate do
   import Plug.Conn
+  alias Poaster.Accounts.AuthToken
+  alias Poaster.Repo
 
   def init(default), do: default
   def call(conn, _default) do
     case Poaster.Services.Authenticator.get_auth_token(conn) do
       {:ok, token} ->
-        case Poaster.Repo.get_by(Poaster.AuthToken, %{token: token, revoked: false}) |> Poaster.Repo.preload(:user) do
+        case Repo.get_by(AuthToken, %{token: token, revoked: false}) |> Repo.preload(:user) do
           nil -> unauthorized(conn)
           auth_token -> authorized(conn, auth_token.user)
         end

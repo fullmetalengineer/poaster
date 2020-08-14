@@ -1,13 +1,15 @@
-defmodule Poaster.User do
+defmodule Poaster.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
   alias Poaster.Services.Authenticator
   alias Poaster.Repo
-  alias Poaster.User
-  alias Poaster.AuthToken
+  alias Poaster.Accounts.User
+  alias Poaster.Acounts.AuthToken
+  alias Poaster.Accounts.Persona
 
   schema "users" do
-    has_many :auth_tokens, Poaster.AuthToken
+    has_many :auth_tokens, AuthToken
+    has_many :personas, Persona
     field :email, :string
     field :password_hash, :string
     field :password, :string, virtual: true

@@ -6,3 +6,12 @@ Poaster.Repo.insert!(Poaster.User.changeset(%Poaster.User{}, %{email: "alan.d.lo
 
 # create auth tokens
 mix phx.gen.schema AuthToken auth_tokens user_id:references:users token:text:unique revoked:boolean revoked_at:utc_datetime
+
+# create personas
+mix phx.gen.schema Persona personas user_id:references:users username:string:unique name:string bio:string profile_image_url:string background_image_url:string
+
+# Insert persona into DB
+Poaster.Repo.insert!(Poaster.User.changeset(%Poaster.User{}, %{email: "alan.d.long@protonmail.com", password: "poaster!2020", phone: "3142017135"}))
+
+
+u = Poaster.Repo.get(Poaster.User, 1) |> Poaster.Repo.preload([:personas])
