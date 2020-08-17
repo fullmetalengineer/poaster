@@ -1,6 +1,7 @@
 defmodule PoasterWeb.UsersController do
   use PoasterWeb, :controller
   alias Poaster.Repo
+  alias Poaster.Accounts
   alias Poaster.Accounts.User
 
   def me(conn, _params) do
@@ -9,6 +10,29 @@ defmodule PoasterWeb.UsersController do
     conn
       |> put_status(:ok)
       |> json(user_with_personas(user))
+  end
+
+  def create(conn, %{"email" => email, "phone" => phone, "password" => password}) do
+    # TODO: Don't allow new accounts with the same phone number on multiple active accounts
+    # We want to only allow duplicate phone numbers IFF there is no other active account with that number
+    case Accounts.create_user(%{email: email, phone: phone, password: password}) do
+      {:ok, user} ->
+        # Log the user in using their newly created email and password
+        {:ok, auth_token} = User.sign_in(email, password)
+        conn
+          |> put_status(:created)
+          |> json(%{ success: true, data: %{ user: %{ email: user.email, phone: user.phone, token: auth_token.token }}})
+
+      {:error, changeset} ->
+        conn
+          |> put_status(400)
+          |> json(%{
+            success: false,
+            errors: %{
+              detail: Poaster.Errors.full_messages(changeset)
+            }
+          })
+    end
   end
 
   def update(conn, %{"id" => id, "persona" => persona_params}) do
