@@ -25,7 +25,7 @@ defmodule Poaster.Accounts.Persona do
   end
 
   def validate_min_length(changeset, field, text_length) do
-    validate_change(changeset, field, fn (current_field, value) ->
+    validate_change(changeset, field, fn (_current_field, value) ->
       if String.length(value) < text_length do
         [current_field: "must be at least #{text_length} characters"]
       else
@@ -35,7 +35,7 @@ defmodule Poaster.Accounts.Persona do
   end
 
   def validate_max_length(changeset, field, text_length) do
-    validate_change(changeset, field, fn (current_field, value) ->
+    validate_change(changeset, field, fn (_current_field, value) ->
       if String.length(value) > text_length do
         [current_field: "must be no longer than #{text_length} characters"]
       else

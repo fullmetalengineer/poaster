@@ -1,7 +1,7 @@
 defmodule PoasterWeb.UsersView do
   use PoasterWeb, :view
 
-  def render(conn, "me.json", %{user: user}) do
+  def render(_conn, "me.json", %{user: user}) do
     %{
       data: render_one(user, PoasterWeb.UserView, "user.json")
     }
