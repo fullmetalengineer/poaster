@@ -29,6 +29,7 @@ defmodule PoasterWeb.Router do
 
     # Unauthenticated endpoints
     post "/sessions/sign_in", SessionsController, :create
+    post "/users", UsersController, :create
 
     # Authenticated endpoints
     pipe_through :authenticated
