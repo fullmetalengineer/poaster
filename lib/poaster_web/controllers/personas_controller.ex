@@ -1,7 +1,8 @@
 defmodule PoasterWeb.PersonasController do
   use PoasterWeb, :controller
   alias Poaster.Accounts
-  alias Poaster.Accounts.Persona
+  alias Poaster.Personas
+  alias Poaster.Personas.Persona
   alias Poaster.Repo
 
   def availability(conn, %{"username" => username}) do
@@ -26,7 +27,7 @@ defmodule PoasterWeb.PersonasController do
   end
 
   def show(conn, %{"id" => id}) do
-    persona = Accounts.get_persona!(id)
+    persona = Personas.get_persona!(id)
     case persona do
       %Persona{} ->
         conn
@@ -58,7 +59,7 @@ defmodule PoasterWeb.PersonasController do
           |> json(%{ success: false, error: %{ detail: "You must provide a valid username when creating a Persona!" }})
           |> halt()
       else
-        result = Accounts.create_persona(%{username: username, user_id: user.id})
+        result = Personas.create_persona(%{username: username, user_id: user.id})
         case result do
           {:ok, persona} ->
             conn
@@ -78,8 +79,8 @@ defmodule PoasterWeb.PersonasController do
   end
 
   def update(conn, %{"id" => id, "persona" => persona_params}) do
-    persona = Accounts.get_persona!(id)
-    result = Accounts.update_persona(persona, persona_params)
+    persona = Personas.get_persona!(id)
+    result = Personas.update_persona(persona, persona_params)
 
     if Accounts.user_owns_persona?(conn.assigns[:signed_user], persona) do
       case result do
@@ -110,10 +111,10 @@ defmodule PoasterWeb.PersonasController do
     # Delete a persona
     # TODO: Mark as deleted, not actual delete?
     user = conn.assigns[:signed_user]
-    persona = Accounts.get_persona!(id)
+    persona = Personas.get_persona!(id)
 
     if Accounts.user_owns_persona?(user, persona) do
-      result = Accounts.delete_persona(persona)
+      result = Personas.delete_persona(persona)
       case result do
         {:ok, %Persona{}} ->
           conn
