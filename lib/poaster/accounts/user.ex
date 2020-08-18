@@ -5,7 +5,7 @@ defmodule Poaster.Accounts.User do
   alias Poaster.Repo
   alias Poaster.Accounts.User
   alias Poaster.Accounts.AuthToken
-  alias Poaster.Accounts.Persona
+  alias Poaster.Personas.Persona
 
   schema "users" do
     has_many :auth_tokens, AuthToken

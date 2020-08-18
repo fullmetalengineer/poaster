@@ -1,10 +1,11 @@
-defmodule Poaster.Accounts.Persona do
+defmodule Poaster.Personas.Persona do
   use Ecto.Schema
   import Ecto.Changeset
   alias Poaster.Accounts.User
 
   schema "personas" do
     belongs_to :user, User
+    has_many :followings, Poaster.Personas.Following
     field :background_image_url, :string
     field :bio, :string
     field :name, :string
