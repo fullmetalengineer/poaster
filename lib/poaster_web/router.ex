@@ -33,11 +33,12 @@ defmodule PoasterWeb.Router do
 
     # Authenticated endpoints
     pipe_through :authenticated
+
     scope "/sessions" do
       delete "/sign_out", SessionsController, :delete
       post "/revoke", SessionsController, :revoke
     end
-    # more routes
+
     scope "/users" do
       get "/me", UsersController, :me
     end
@@ -46,6 +47,8 @@ defmodule PoasterWeb.Router do
     scope "/personas" do
       post "/availability", PersonasController, :availability
     end
+
+    resources "/follows", FollowingsController, except: [:new, :edit, :update, :show]
   end
 
   # Enables LiveDashboard only for development
