@@ -14,4 +14,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 6. [Make a call to get your user profile](https://github.com/fullmetalengineer/poaster/wiki/API-Documentation#me)
 7. [Create yourself a persona](https://github.com/fullmetalengineer/poaster/wiki/API-Documentation#create-persona) (all posts are done under personas)
 8. [Mess around with updating your persona](https://github.com/fullmetalengineer/poaster/wiki/API-Documentation#update-persona)
-9. Create your first poast (COMING SOON)
+9. Create a secondary user
+10. Create the secondary user a persona
+11. [Follow That Persona!](https://github.com/fullmetalengineer/poaster/wiki/API-Documentation#follow)
+12. Create your first poast (COMING SOON)
