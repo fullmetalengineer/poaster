@@ -1,11 +1,11 @@
 defmodule Poaster.Personas.Following do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Poaster.Accounts.Persona
+  alias Poaster.Personas.Persona
 
   schema "followings" do
     belongs_to :persona, Persona
-    belongs_to :follower, Follower
+    belongs_to :followed, Persona
 
     timestamps()
   end
