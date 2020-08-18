@@ -5,6 +5,8 @@ defmodule Poaster.Services.Authenticator do
   @secret Application.get_env(:poaster, PoasterWeb.Endpoint)[:secret_key_base]
 
   def generate_token(id) do
+    # TODO: Figure out how to do long-lasting tokens, or convert to generating my own using the below:
+    # :crypto.strong_rand_bytes(length) |> Base.url_encode64 |> binary_part(0, length)
     Phoenix.Token.sign(@secret, @seed, id)
   end
   def verify_token(token) do
