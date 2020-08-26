@@ -7,7 +7,6 @@ defmodule Poaster.Accounts do
   alias Poaster.Repo
 
   alias Poaster.Accounts.User
-  alias Poaster.Personas.Persona
 
   @doc """
   Returns the list of users.
